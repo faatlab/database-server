@@ -21,12 +21,10 @@ exports.getColleges = async (req, res) => {
 };
 
 exports.getCourses = async (req, res) => {
-   const { search_query, selected_state, course_id } = req.query;
+   const { search_query, selected_state, course_id, applied_courses_arr, saved_courses_arr} = req.query;
    const page = parseInt(req.query.page) || 1;
    const limit = parseInt(req.query.limit) || 18;
    const skip = (page - 1) * limit;
-
-   console.log(course_id);
    
    try {
       let filter = {};
@@ -42,6 +40,16 @@ exports.getCourses = async (req, res) => {
       if (course_id) {
          filter.course_id = course_id;
       }      
+
+      if (applied_courses_arr) {
+         const courseIdArray = applied_courses_arr.split(",");
+         filter.course_id = { $in: courseIdArray };
+      }
+
+      if (saved_courses_arr) {
+         const courseIdArray = saved_courses_arr.split(",");
+         filter.course_id = { $in: courseIdArray };
+      }
 
       const total = await courses.countDocuments(filter);
       const coursesData = await courses.find(filter).skip(skip).limit(limit);
