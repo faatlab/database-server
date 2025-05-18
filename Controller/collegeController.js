@@ -3,11 +3,19 @@ const courses = require("../Model/courseSchema");
 
 exports.getColleges = async (req, res) => {
    try {
+      const { college_id } = req.query;
       const page = parseInt(req.query.page) || 1; // Default to page 1
       const limit = parseInt(req.query.limit) || 12; // Default to 10 items per page
       const skip = (page - 1) * limit;
+
+      let filter = {};
+
+      if (college_id) {
+         filter.col_id = college_id;
+      }
+
       const total = await colleges.countDocuments();
-      const collegesData = await colleges.find().skip(skip).limit(limit);
+      const collegesData = await colleges.find(filter).skip(skip).limit(limit);
 
       res.status(200).json({
          total,
@@ -21,11 +29,18 @@ exports.getColleges = async (req, res) => {
 };
 
 exports.getCourses = async (req, res) => {
-   const { search_query, selected_state, course_id, applied_courses_arr, saved_courses_arr} = req.query;
+   const {
+      search_query,
+      selected_state,
+      similar,
+      course_id,
+      applied_courses_arr,
+      saved_courses_arr,
+   } = req.query;
    const page = parseInt(req.query.page) || 1;
    const limit = parseInt(req.query.limit) || 18;
    const skip = (page - 1) * limit;
-   
+
    try {
       let filter = {};
 
@@ -39,7 +54,7 @@ exports.getCourses = async (req, res) => {
 
       if (course_id) {
          filter.course_id = course_id;
-      }      
+      }
 
       if (applied_courses_arr) {
          const courseIdArray = applied_courses_arr.split(",");
@@ -49,6 +64,12 @@ exports.getCourses = async (req, res) => {
       if (saved_courses_arr) {
          const courseIdArray = saved_courses_arr.split(",");
          filter.course_id = { $in: courseIdArray };
+      }
+
+      console.log(filter);
+
+      if (similar) {
+         filter.course_name = { $regex: similar, $options: "i" };
       }
 
       const total = await courses.countDocuments(filter);
