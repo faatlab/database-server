@@ -3,13 +3,34 @@ require("./DB/connection");
 
 const express = require("express");
 const cors = require("cors");
-const router = require("./Routes/router")
+const router = require("./Routes/router");
 
 const faatlab_DB_Server = express();
 
-faatlab_DB_Server.use(cors());
-faatlab_DB_Server.use(express.json())
-faatlab_DB_Server.use(router)
+const allowedOrigins = [
+   "https://rawscholar.com",
+   "https://www.rawscholar.com",
+   "http://leadzedu.com",
+   "http://www.leadzedu.com",
+   "http://leadzstudyabroad.com",
+   "http://www.leadzstudyabroad.com",
+   "http://localhost:3000",
+   "http://localhost:5173",
+];
+
+faatlab_DB_Server.use(
+   cors({
+      origin: function (origin, callback) {
+         if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+         } else {
+            callback(new Error("Not allowed by CORS"));
+         }
+      },
+   })
+);
+faatlab_DB_Server.use(express.json());
+faatlab_DB_Server.use(router);
 
 const PORT = 4200 || process.env.PORT;
 

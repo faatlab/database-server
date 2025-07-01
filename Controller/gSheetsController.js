@@ -31,7 +31,7 @@ exports.addToSheets = async (req, res) => {
          typeOfStudy,
          preferredSubject,
          yearOfStudy,
-         location,
+         state,
          qualification,
       } = req.body;
 
@@ -44,7 +44,7 @@ exports.addToSheets = async (req, res) => {
          typeOfStudy,
          preferredSubject,
          yearOfStudy,
-         location,
+         state,
          qualification,
       ])
          .then(() => {
