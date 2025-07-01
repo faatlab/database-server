@@ -66,8 +66,6 @@ exports.getCourses = async (req, res) => {
          filter.course_id = { $in: courseIdArray };
       }
 
-      console.log(filter);
-
       if (similar) {
          filter.course_name = { $regex: similar, $options: "i" };
       }
