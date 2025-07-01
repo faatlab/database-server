@@ -10,10 +10,10 @@ const faatlab_DB_Server = express();
 const allowedOrigins = [
    "https://rawscholar.com",
    "https://www.rawscholar.com",
-   "http://leadzedu.com",
-   "http://www.leadzedu.com",
-   "http://leadzstudyabroad.com",
-   "http://www.leadzstudyabroad.com",
+   "https://leadzedu.com",
+   "https://www.leadzedu.com",
+   "https://leadzstudyabroad.com",
+   "https://www.leadzstudyabroad.com",
    "http://localhost:3000",
    "http://localhost:5173",
 ];

@@ -49,12 +49,13 @@ exports.addToSheets = async (req, res) => {
       ])
          .then(() => {
             res.status(200).json({
-               message: "Data added to Google Sheets successfully",
+               message: "Form submitted successfully! We will contact you soon.",
+               data:{firstName, lastName}
             });
          })
          .catch((error) => {
             res.status(500).json({
-               message: "Error adding data to Google Sheets",
+               message: "Failed to submit the form. Please try again later.",
                error: error.message,
             });
          });
