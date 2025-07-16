@@ -5,7 +5,7 @@ exports.getUniversities = async (req, res) => {
    try {
       const { uni_id, country } = req.params;
       const page = parseInt(req.query.page) || 1; // Default to page 1
-      const limit = parseInt(req.query.limit) || 12; // Default to 10 items per page
+      const limit = parseInt(req.query.limit) || 12; // Default to 12 items per page
       const skip = (page - 1) * limit;
 
       let filter = {};

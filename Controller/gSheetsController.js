@@ -24,7 +24,6 @@ exports.addToSheets = async (req, res) => {
    try {
       const {
          firstName,
-         lastName,
          phoneNumber,
          email,
          studyDestination,
@@ -37,7 +36,6 @@ exports.addToSheets = async (req, res) => {
 
       await appendToSheet([
          firstName,
-         lastName,
          phoneNumber,
          email,
          studyDestination,
