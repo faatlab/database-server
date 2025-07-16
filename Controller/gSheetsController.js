@@ -48,7 +48,7 @@ exports.addToSheets = async (req, res) => {
          .then(() => {
             res.status(200).json({
                message: "Form submitted successfully! We will contact you soon.",
-               data:{firstName, lastName}
+               data:{firstName}
             });
          })
          .catch((error) => {
