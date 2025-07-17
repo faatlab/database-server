@@ -3,7 +3,7 @@ const universityCourses = require("../Model/universityCoursesSchema");
 
 exports.getUniversities = async (req, res) => {
    try {
-      const { uni_id, country } = req.params;
+      const { uni_id, country, search } = req.params;
       const page = parseInt(req.query.page) || 1; // Default to page 1
       const limit = parseInt(req.query.limit) || 12; // Default to 12 items per page
       const skip = (page - 1) * limit;
@@ -14,7 +14,9 @@ exports.getUniversities = async (req, res) => {
          filter.uni_id = uni_id;
       } else if (country) {
          filter.country = country; // Adjust this based on your schema
-      }      
+      } else if (search) {
+         filter.search = search;
+      }
 
       const total = await universities.countDocuments();
       const universitiesData = await universities
@@ -35,7 +37,7 @@ exports.getUniversities = async (req, res) => {
 
 exports.getCourses = async (req, res) => {
    try {
-      const { uni_id, course_id } = req.params;
+      const { uni_id, course_id, search } = req.params;
       const page = parseInt(req.query.page) || 1; // Default to page 1
       const limit = parseInt(req.query.limit) || 12; // Default to 10 items per page
       const skip = (page - 1) * limit;
@@ -46,6 +48,8 @@ exports.getCourses = async (req, res) => {
          filter.uni_id = uni_id;
       } else if (course_id) {
          filter.course_id = course_id;
+      } else if (search) {
+         filter.search = search;
       }
 
       const total = await universityCourses.countDocuments(filter);
