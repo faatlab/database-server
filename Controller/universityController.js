@@ -49,7 +49,7 @@ exports.getCourses = async (req, res) => {
       } else if (course_id) {
          filter.course_id = course_id;
       } else if (search) {
-         filter.search = search;
+         filter.course_name = search;
       }
 
       const total = await universityCourses.countDocuments(filter);
