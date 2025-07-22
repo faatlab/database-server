@@ -15,6 +15,7 @@ const allowedOrigins = [
    "https://leadzstudyabroad.com",
    "https://www.leadzstudyabroad.com",
    "http://localhost:3000",
+   "http://localhost:4200",
    "http://localhost:5173",
 ];
 
