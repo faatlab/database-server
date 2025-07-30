@@ -37,21 +37,21 @@ exports.getUniversities = async (req, res) => {
 
 exports.getCourses = async (req, res) => {
    try {
-      const { uni_id, course_id, search } = req.params;
+      const { uni_id, course_id, search_term } = req.params;
       const page = parseInt(req.query.page) || 1; // Default to page 1
       const limit = parseInt(req.query.limit) || 12; // Default to 10 items per page
-      const skip = (page - 1) * limit;
-
+      const skip = (page - 1) * limit;      
+      
       let filter = {};
 
       if (uni_id) {
          filter.uni_id = uni_id;
       } else if (course_id) {
          filter.course_id = course_id;
-      } else if (search) {
-         filter.course_name = search;
+      } else if (search_term) {
+         filter.course_name = { $regex: search_term, $options: "i" };
       }
-
+   
       const total = await universityCourses.countDocuments(filter);
       const coursesData = await universityCourses
          .find(filter)
@@ -64,6 +64,8 @@ exports.getCourses = async (req, res) => {
          totalPages: Math.ceil(total / limit),
          coursesData,
       });
+
+      
    } catch (error) {
       res.status(500).json({ message: error.message });
    }
