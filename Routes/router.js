@@ -19,6 +19,8 @@ router.post("/rawscholar/register", gSheetsController.addToSheets);
 
 router.get("/:country/universities", universityController.getUniversities);
 
+router.get("/universities", universityController.getUniversities);
+
 router.get("/universities/:uni_id", universityController.getUniversities);
 
 router.get("/:uni_id/courses", universityController.getCourses);
